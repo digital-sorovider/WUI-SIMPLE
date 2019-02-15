@@ -1,0 +1,37 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rusian0/Server-to-Client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rusian0/Server-to-Client/issues"
+  },
+  "homepage": "https://github.com/rusian0/Server-to-Client#readme",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "chokidar": "^2.1.1",
+    "dgram": "^1.0.1",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "libnmap": "^0.4.16",
+    "lsof": "^0.1.0",
+    "namp": "^0.2.25",
+    "netcat": "^1.4.0",
+    "nmap": "^1.1.0",
+    "node-libnmap": "^0.2.15",
+    "node-netcat": "^1.4.8",
+    "node-nmap": "^4.0.0",
+    "portscanner": "^2.2.0",
+    "socket.io": "^2.2.0",
+    "udp-transport": "^0.1.2"
+  }
+}

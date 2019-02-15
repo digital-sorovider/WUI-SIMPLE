@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Server-to-Client</title>
+        <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+        <!-- <script src="http://localhost:3000/socket.io/socket.io.js"></script> -->
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <link rel="shortcut icon" href="favicon.ico">
+    </head>
+
+    <body>
+        <!-- <iframe src="https://sock.rusian0.com" frameborder="0"></iframe> -->
+        <h1>Test</h1>
+        <!-- <canvas id="canvas" width="100" height="100" style='background: gray'></canvas> -->
+        <!-- <img src="server-icon.png" alt=""> -->
+<h3 id="status"></h3>
+        <div id="messages"></div>
+
+        <script>
+            var socket_c = io('http://localhost:3000', {transports:['polling']});
+
+            $(function () {
+                $('#message_form').submit(function () {
+                    socket_c.emit('message', $('#input_msg').val());
+                    $('#input_msg').val('');
+                    return false;
+                });
+
+                socket_c.on('message_s', function (msg) {
+                    $('#messages').html($('<h3>').text(msg));
+                });
+
+                socket_c.on('server_status', function (status, col) {
+                    $('#status').text(status).css('color', col);
+                });
+            });
+        </script>
+    </body>
+
+
+
+</html>
