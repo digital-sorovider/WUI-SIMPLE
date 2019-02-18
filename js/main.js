@@ -17,7 +17,6 @@ $(function () {
 
     //アクションボタンが押された時の処理
     $('.action').on('click', function () {
-        // $('.action').prop('disabled', true)
         action =  $(this).data('type')
         // load = Upper(action) + "ing..."
 
@@ -34,6 +33,8 @@ $(function () {
     //サーバーのステータスが変化したときに表示する処理
     socket_c.on('server_status', function (status, col) {
         $('#status').text(status).css('color', col);
+        // $('.action').prop('disabled', false)
+
     });
     socket_c.on('load', function (enable) {
         if (enable) {
