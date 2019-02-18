@@ -6,6 +6,7 @@ const io = require('socket.io')(http);
 const PORT = process.env.Port || 3000;
 const is_windows = process.platform === 'win32'
 const is_linux = process.platform === 'linux'
+var f = require('./func.js');
 
 var status;
 
@@ -71,6 +72,10 @@ io.on('connection', function (socket) {
 	listen_check()
 	if (status) io.emit('server_status', "Running!!", 'lightgreen');
 	else io.emit('server_status', "Not Run!", 'red');
+
+	socket.on('exe', function(action){
+		f.udp(action)
+	})
 });
 
 http.listen(PORT, function () {
