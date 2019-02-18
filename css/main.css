@@ -1,0 +1,23 @@
+img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.load_space {
+    width: 100px;
+    height:  100px;
+    /* background-color: white; */
+    opacity: 1;
+}
+
+.status_space {
+    width: calc(100vmin - 60px);
+    height:  calc(30vmin - 60px);
+    /* background-color: white; */
+    opacity: 1;
+}
+
+#load {
+    display: none
+}
