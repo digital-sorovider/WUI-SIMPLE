@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(83, 83, 83);
+}
+
 img {
     width: 100px;
     height: 100px;
@@ -16,6 +20,16 @@ img {
     height:  calc(30vmin - 60px);
     /* background-color: white; */
     opacity: 1;
+}
+
+.action {
+    width: 80px;
+    height: 30px;
+}
+
+.select {
+    width: 80px;
+    height: 30px;
 }
 
 #load {

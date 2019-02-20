@@ -1,4 +1,5 @@
 var socket_c = io('http://localhost:3000', { transports: ['polling'] });
+// var game = 'test1'
 
 $(function () {
 
@@ -17,12 +18,15 @@ $(function () {
 
     //アクションボタンが押された時の処理
     $('.action').on('click', function () {
-        action =  $(this).data('type')
+        // action =  $(this).data('type')
         // load = Upper(action) + "ing..."
 
         // $('#status').text(load).css('color', 'blue')
-        socket_c.emit('exe', action)
-        console.log($(this).data('type'))
+        $('.action').prop('disabled', true)
+        socket_c.emit('exe', $(this).data('type'))
+
+        // socket_c.emit('exe', action)
+        // console.log($(this).data('type'))
     })
 
     //未使用
@@ -31,8 +35,14 @@ $(function () {
     // });
 
     //サーバーのステータスが変化したときに表示する処理
-    socket_c.on('server_status', function (status, col) {
+    socket_c.on('server_status', function (status, col, button_name1, button_type1, button_name2, button_type2, ing) {
+        // $('.action').prop('disabled', false)
         $('#status').text(status).css('color', col);
+        $('#button1').val(button_name1).data('type', button_type1)
+        $('#button2').val(button_name2).data('type', button_type2)
+        if(!ing){
+            $('.action').prop('disabled', false)
+        }
         // $('.action').prop('disabled', false)
 
     });
