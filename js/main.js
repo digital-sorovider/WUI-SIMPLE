@@ -1,5 +1,5 @@
 var socket_c = io('http://localhost:3000', { transports: ['polling'] });
-// var game = 'test1'
+var game = 'test1'
 
 $(function () {
 
