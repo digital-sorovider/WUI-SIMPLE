@@ -9,21 +9,31 @@ exports.listen = new EventEmitter
 var listening
 var default_connect
 var speed = 500;
-exports.listen.on('initial_status', function(data){
+exports.listen.on('initial_status', function (data) {
     default_connect = data
 })
 
+var pre_port
+
 //チェックしたいポート
-check_port = "4000"
-port = '":' + check_port + ' "'
+// check_port = "4000"
+// port = '":' + check_port + ' "'
 
 //プロトコル
-pro = 'UDP'
+// pro = 'UDP'
 
 //サーバーが起動しているかをポートのlisten状態で判断し、結果をクライアントにプッシュする
-// exports.listen_check = function (status) {
+exports.listen_check = function (check_port, protocol, channel) {
+    if (pre_port !== check_port) {
+
+        pre_port = check_port
+    }
     // console.log(status)
-setInterval(() => {
+    // setInterval(() => {
+    port = '":' + check_port + ' "'
+
+    //プロトコル
+    pro = 'UDP'
 
 
     //実行OSを基にnetstatとコマンドのオプションと検索コマンドの分岐
@@ -41,10 +51,10 @@ setInterval(() => {
 
     //指定されたポートがlistenされているかどうか判定
     // var result = new Promise(function (resolve) {
-        exec('netstat' + args + '|' + search_type + port, (err, stdout) => {
-            if (!err) exports.listen.emit('listen', true)
-            else exports.listen.emit('listen', false)
-        })
+    exec('netstat' + args + '|' + search_type + port, (err, stdout) => {
+        if (!err) exports.listen.emit('listen', true, channel)
+        else exports.listen.emit('listen', false, channel)
+    })
     // })
 
     //（ポートのlisten確認後）前回の判定結果と今回の判定結果が違う場合はサーバーのステータスが変化したことをクライアントに知らせる
@@ -62,10 +72,11 @@ setInterval(() => {
     // })
 
 
-}, speed)
-// }
+    // }, speed)
+}
 
-exports.Upper = function(str) {
+//先頭の1文字だけ大文字にする関数
+exports.Upper = function (str) {
     if (!str || typeof str !== 'string') return str;
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };

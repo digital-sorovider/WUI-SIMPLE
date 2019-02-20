@@ -1,5 +1,5 @@
 var socket_c = io('http://localhost:3000', { transports: ['polling'] });
-var game = 'test1'
+// var channel = 'test1'
 
 $(function () {
 
@@ -8,6 +8,10 @@ $(function () {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
 
+    //初期のサーバーチェンジ
+    // socket_c.emit('change channel', 'test1')
+    // $('.select').prop('disabled', false)
+    // $('#test1').prop('disabled', true);
 
     //未使用
     // $('#message_form').submit(function () {
@@ -22,8 +26,27 @@ $(function () {
         // load = Upper(action) + "ing..."
 
         // $('#status').text(load).css('color', 'blue')
-        $('.action').prop('disabled', true)
+        // $('.action').prop('disabled', true)
         socket_c.emit('exe', $(this).data('type'))
+
+        // socket_c.emit('exe', action)
+        // console.log($(this).data('type'))
+    })
+
+    //セレクトボタンが押されたときの処理
+    $('.select').on('click', function () {
+        console.log($(this).val())
+        socket_c.emit('change channel', $(this).data('server'))
+        $('.select').prop('disabled', false)
+        $(this).prop('disabled', true);
+        // console.log(selection)
+        // $('#server_name').text(selection)
+        // action =  $(this).data('type')
+        // load = Upper(action) + "ing..."
+
+        // $('#status').text(load).css('color', 'blue')
+        // $('.action').prop('disabled', true)
+        // socket_c.emit('exe', $(this).data('type'))
 
         // socket_c.emit('exe', action)
         // console.log($(this).data('type'))
@@ -37,21 +60,34 @@ $(function () {
     //サーバーのステータスが変化したときに表示する処理
     socket_c.on('server_status', function (status, col, button_name1, button_type1, button_name2, button_type2, ing) {
         // $('.action').prop('disabled', false)
+
         $('#status').text(status).css('color', col);
         $('#button1').val(button_name1).data('type', button_type1)
         $('#button2').val(button_name2).data('type', button_type2)
         if(!ing){
             $('.action').prop('disabled', false)
-        }
-        // $('.action').prop('disabled', false)
-
-    });
-    socket_c.on('load', function (enable) {
-        if (enable) {
-            $('#load').fadeIn('slow')
-        }
-        else {
             $('#load').fadeOut('slow')
         }
+        else {
+            $('#load').fadeIn('slow')
+            $('.action').prop('disabled', true)
+        }
     });
+
+    // socket_c.on('element_change', function(name, color){
+    //     $('#server_name').text(name)
+    //     $('#body').css('background-color', color)
+    // })
+
+
+    socket_c.on('change channel', function(channel, name, color){
+        $('#server_name').text(name)
+        $('#body').css('background-color', color)
+        // console.log(channel + "にログイン")
+    })
+
+    socket_c.on('your', function(c_channel){
+        // console.log("現在のチャンネル名:" + c_channel)
+    })
+
 });

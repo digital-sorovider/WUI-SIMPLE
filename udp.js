@@ -1,6 +1,8 @@
 var dgram = require('dgram')
 var server_host = 'localhost'
-var server_port = 4000
+// var server_port = 4000
+server_port = process.argv[2]
+// server_protocol = process.argv[3]
 var server = dgram.createSocket("udp4")
 
 setTimeout(() => {

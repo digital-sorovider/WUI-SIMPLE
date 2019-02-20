@@ -25,13 +25,35 @@ img {
 .action {
     width: 80px;
     height: 30px;
+    cursor: pointer;
+
+}
+
+.action:disabled{
+    cursor: default;
 }
 
 .select {
     width: 80px;
     height: 30px;
+    background-color: rgb(255, 176, 176);
+    border-style:none;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.select:hover{
+    background-color: rgb(255, 73, 73);
+}
+.select:disabled{
+    cursor: default;
+    background-color: rgb(255, 176, 176);
 }
 
 #load {
     display: none
+}
+
+.hoge {
+    color: #bcc977
 }
