@@ -1,8 +1,10 @@
 console.log(module.parent.exports.test)
-const exec = require('child_process').exec
+// const exec = require('child_process').exec
 const EventEmitter = require('events').EventEmitter
 const is_windows = process.platform === 'win32'
 const is_linux = process.platform === 'linux'
+const { spawn,exec } = require('promisify-child-process');
+var execSync = require('child_process').execSync;
 
 exports.listen = new EventEmitter
 
@@ -15,6 +17,8 @@ exports.listen.on('initial_status', function (data) {
 
 var pre_port
 
+
+
 //チェックしたいポート
 // check_port = "4000"
 // port = '":' + check_port + ' "'
@@ -23,14 +27,16 @@ var pre_port
 // pro = 'UDP'
 
 //サーバーが起動しているかをポートのlisten状態で判断し、結果をクライアントにプッシュする
-exports.listen_check = function (check_port, protocol, channel) {
-    if (pre_port !== check_port) {
+// exports.listen_check = function (check_port, protocol, channel) {
+//     if (pre_port !== check_port) {
 
-        pre_port = check_port
-    }
-    // console.log(status)
-    // setInterval(() => {
-    port = '":' + check_port + ' "'
+//         pre_port = check_port
+//     }
+//     // console.log(status)
+//     // setInterval(() => {
+    check_port = "4000"
+
+    port = ':' + check_port + ' '
 
     //プロトコル
     pro = 'UDP'
@@ -39,22 +45,34 @@ exports.listen_check = function (check_port, protocol, channel) {
     //実行OSを基にnetstatとコマンドのオプションと検索コマンドの分岐
     if (is_windows) {
         args = ' -anp ' + pro + ' '
-        search_type = ' find '
     }
 
     if (is_linux) {
-        search_type = ' grep '
         if (pro === 'TCP') args = ' -ant '
         else args = ' -anu '
 
     }
 
-    //指定されたポートがlistenされているかどうか判定
-    // var result = new Promise(function (resolve) {
-    exec('netstat' + args + '|' + search_type + port, (err, stdout) => {
-        if (!err) exports.listen.emit('listen', true, channel)
-        else exports.listen.emit('listen', false, channel)
-    })
+// var result = "" + execSync('netstat' + args).indexOf(port);
+// var result = "" + execSync('netstat' + args + '|' + search_type + port);
+// console.log(result.indexOf(port));
+// check = result.indexOf(":4000 ")
+// console.log(check);
+
+if (execSync('netstat' + args).indexOf(port) > 0) {
+// if (execSync('netstat' + args).indexOf(":4000 ") > 0) {
+    console.log("開放状態")
+}
+else {
+    console.log("閉鎖");
+}
+
+//     //指定されたポートがlistenされているかどうか判定
+//     // var result = new Promise(function (resolve) {
+//     exec('netstat' + args + '|' + search_type + port, (err, stdout) => {
+//         if (!err) exports.listen.emit('listen', true, channel)
+//         else exports.listen.emit('listen', false, channel)
+//     })
     // })
 
     //（ポートのlisten確認後）前回の判定結果と今回の判定結果が違う場合はサーバーのステータスが変化したことをクライアントに知らせる
@@ -73,7 +91,7 @@ exports.listen_check = function (check_port, protocol, channel) {
 
 
     // }, speed)
-}
+// }
 
 //先頭の1文字だけ大文字にする関数
 exports.Upper = function (str) {

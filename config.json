@@ -1,21 +1,20 @@
 {
     "test1": {
+        "name": "test1",
         "port": "4000",
         "protocol": "UDP",
         "background": "#668d9c"
-
     },
-
     "test2": {
+        "name": "test1",
         "port": "5000",
         "protocol": "UDP",
-        "background":"#669c6b"
+        "background": "#669c6b"
     },
-
     "test3": {
+        "name": "test1",
         "port": "6000",
         "protocol": "UDP",
-        "background":"#bcc977"
-
+        "background": "#bcc977"
     }
 }
