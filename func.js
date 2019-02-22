@@ -80,3 +80,15 @@ exports.Upper = function (str) {
     if (!str || typeof str !== 'string') return str;
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
+
+
+exports.startTimer = function (info, channel) {
+    exports.status_timer = setInterval(function () {
+        // info = config[channel]
+        exports.listen_check(info['port'], info['protocol'], channel)
+    }, 500);
+}
+
+exports.stopTimer = function (timer) {
+    clearInterval(timer)
+}

@@ -86,8 +86,8 @@ $(function () {
         // console.log(channel + "にログイン")
     })
 
-    socket_c.on('your', function(c_channel){
-        // console.log("現在のチャンネル名:" + c_channel)
+    socket_c.on('debug', function(str){
+        console.log(str)
     })
 
 });

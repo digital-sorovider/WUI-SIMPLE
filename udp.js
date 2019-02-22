@@ -8,4 +8,8 @@ var server = dgram.createSocket("udp4")
 setTimeout(() => {
     server.bind(server_port, server_host)
     console.log(server_host, server_port)
-}, 4000);
+}, 2000);
+
+
+// path = process.cwd().replace(/\\/g, "/") + '/exe/memo.lnk';
+			// exec(path)

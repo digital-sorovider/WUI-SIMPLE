@@ -1,18 +1,21 @@
 {
     "test1": {
         "port": "4000",
-        "protocol": "UDP"
+        "protocol": "UDP",
+        "background": "#668d9c"
 
     },
 
     "test2": {
         "port": "5000",
-        "protocol": "UDP"
+        "protocol": "UDP",
+        "background":"#669c6b"
     },
 
     "test3": {
         "port": "6000",
-        "protocol": "UDP"
+        "protocol": "UDP",
+        "background":"#bcc977"
 
     }
 }
