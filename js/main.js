@@ -27,7 +27,7 @@ $(function () {
 
         // $('#status').text(load).css('color', 'blue')
         // $('.action').prop('disabled', true)
-        socket_c.emit('exe', $(this).data('type'))
+        socket_c.emit('exe', $(this).val())
 
         // socket_c.emit('exe', action)
         // console.log($(this).data('type'))
@@ -58,12 +58,12 @@ $(function () {
     // });
 
     //サーバーのステータスが変化したときに表示する処理
-    socket_c.on('server_status', function (status, col, button_name1, button_type1, button_name2, button_type2, ing) {
+    socket_c.on('server_status', function (status, col, button_l, button_r, ing) {
         // $('.action').prop('disabled', false)
 
         $('#status').text(status).css('color', col);
-        $('#button1').val(button_name1).data('type', button_type1)
-        $('#button2').val(button_name2).data('type', button_type2)
+        $('#button1').val(button_l)
+        $('#button2').val(button_r)
         if(!ing){
             $('.action').prop('disabled', false)
             $('#load').fadeOut('slow')

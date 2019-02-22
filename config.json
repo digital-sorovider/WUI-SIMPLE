@@ -1,20 +1,69 @@
 {
-    "test1": {
-        "name": "test1",
-        "port": "4000",
-        "protocol": "UDP",
-        "background": "#668d9c"
+    "servers_info": {
+        "test1": {
+            "name": "test1",
+            "port": "4000",
+            "protocol": "UDP",
+            "background": "#668d9c"
+        },
+        "test2": {
+            "name": "test2",
+            "port": "5000",
+            "protocol": "UDP",
+            "background": "#669c6b"
+        },
+        "test3": {
+            "name": "test3",
+            "port": "6000",
+            "protocol": "UDP",
+            "background": "#bcc977"
+        }
     },
-    "test2": {
-        "name": "test1",
-        "port": "5000",
-        "protocol": "UDP",
-        "background": "#669c6b"
-    },
-    "test3": {
-        "name": "test1",
-        "port": "6000",
-        "protocol": "UDP",
-        "background": "#bcc977"
+    "status_info": {
+        "run": {
+            "message": "Running!!",
+            "color": "lightgreen",
+            "l_name": "Stop",
+            "r_name": "Restart",
+            "is_ing": false
+        },
+        "not": {
+            "message": "Not Run!",
+            "color": "red",
+            "l_name": "Start",
+            "r_name": "Backup",
+            "is_ing": false
+
+        },
+        "Start": {
+            "message": "Starting...",
+            "color": "orange",
+            "l_name": "",
+            "r_name": "",
+            "is_ing": true
+        },
+        "Stop": {
+            "message": "Stopping...",
+            "color": "red",
+            "l_name": "",
+            "r_name": "",
+            "is_ing": true
+
+        },
+        "Restart": {
+            "message": "Restarting...",
+            "color": "red",
+            "l_name": "",
+            "r_name": "",
+            "is_ing": true
+
+        },
+        "Backup": {
+            "message": "Backuping...",
+            "color": "lightblue",
+            "l_name": "",
+            "r_name": "",
+            "is_ing": true
+        }
     }
 }

@@ -1,9 +1,8 @@
-console.log(module.parent.exports.test)
 // const exec = require('child_process').exec
 const EventEmitter = require('events').EventEmitter
 const is_windows = process.platform === 'win32'
 const is_linux = process.platform === 'linux'
-const { spawn,exec } = require('promisify-child-process');
+// const { spawn,exec } = require('promisify-child-process');
 var execSync = require('child_process').execSync;
 
 exports.listen = new EventEmitter
@@ -34,24 +33,47 @@ var pre_port
 //     }
 //     // console.log(status)
 //     // setInterval(() => {
-    check_port = "4000"
+check_port = "4000"
 
+port = ':' + check_port + ' '
+
+//プロトコル
+pro = 'UDP'
+
+
+//実行OSを基にnetstatとコマンドのオプションと検索コマンドの分岐
+if (is_windows) {
+    exports.args = ' -anp ' + pro + ' '
+}
+
+if (is_linux) {
+    if (pro === 'TCP') exports.args = ' -ant '
+    else exports.args = ' -anu '
+
+}
+
+exports.listen_check = function (target, check_port, protocol) {
     port = ':' + check_port + ' '
-
-    //プロトコル
-    pro = 'UDP'
-
-
-    //実行OSを基にnetstatとコマンドのオプションと検索コマンドの分岐
     if (is_windows) {
-        args = ' -anp ' + pro + ' '
+        args = ' -anp ' + protocol + ' '
     }
 
     if (is_linux) {
-        if (pro === 'TCP') args = ' -ant '
+        if (protocol === 'TCP') args = ' -ant '
         else args = ' -anu '
 
     }
+
+    result = execSync('netstat' + args).indexOf(port)
+
+    if (result > 0) {
+        return true
+    }
+    else {
+        return false
+    }
+
+}
 
 // var result = "" + execSync('netstat' + args).indexOf(port);
 // var result = "" + execSync('netstat' + args + '|' + search_type + port);
@@ -59,13 +81,13 @@ var pre_port
 // check = result.indexOf(":4000 ")
 // console.log(check);
 
-if (execSync('netstat' + args).indexOf(port) > 0) {
+// if (execSync('netstat' + args).indexOf(port) > 0) {
 // if (execSync('netstat' + args).indexOf(":4000 ") > 0) {
-    console.log("開放状態")
-}
-else {
-    console.log("閉鎖");
-}
+// console.log("開放状態")
+// }
+// else {
+// console.log("閉鎖");
+// }
 
 //     //指定されたポートがlistenされているかどうか判定
 //     // var result = new Promise(function (resolve) {
@@ -73,24 +95,24 @@ else {
 //         if (!err) exports.listen.emit('listen', true, channel)
 //         else exports.listen.emit('listen', false, channel)
 //     })
-    // })
+// })
 
-    //（ポートのlisten確認後）前回の判定結果と今回の判定結果が違う場合はサーバーのステータスが変化したことをクライアントに知らせる
-    // result.then(function (data) {
-    //     if (listening !== data || default_connect) {
-    //         if (data) {
-    //             exports.listen.emit('push', "Running!!", 'lightgreen')
-    //         }
-    //         else {
-    //             exports.listen.emit('push', "Not Run!", 'red')
-    //         }
-    //         listening = data
-    //         default_connect = false
-    //     }
-    // })
+//（ポートのlisten確認後）前回の判定結果と今回の判定結果が違う場合はサーバーのステータスが変化したことをクライアントに知らせる
+// result.then(function (data) {
+//     if (listening !== data || default_connect) {
+//         if (data) {
+//             exports.listen.emit('push', "Running!!", 'lightgreen')
+//         }
+//         else {
+//             exports.listen.emit('push', "Not Run!", 'red')
+//         }
+//         listening = data
+//         default_connect = false
+//     }
+// })
 
 
-    // }, speed)
+// }, speed)
 // }
 
 //先頭の1文字だけ大文字にする関数
