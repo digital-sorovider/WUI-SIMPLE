@@ -44,7 +44,7 @@
         },
         "Stop": {
             "message": "Stopping...",
-            "color": "red",
+            "color": "orange",
             "l_name": "",
             "r_name": "",
             "is_ing": true
@@ -52,7 +52,7 @@
         },
         "Restart": {
             "message": "Restarting...",
-            "color": "red",
+            "color": "orange",
             "l_name": "",
             "r_name": "",
             "is_ing": true

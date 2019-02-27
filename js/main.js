@@ -60,7 +60,6 @@ $(function () {
     //サーバーのステータスが変化したときに表示する処理
     socket_c.on('server_status', function (status, col, button_l, button_r, ing) {
         // $('.action').prop('disabled', false)
-
         $('#status').text(status).css('color', col);
         $('#button1').val(button_l)
         $('#button2').val(button_r)
