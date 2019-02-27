@@ -1,9 +1,5 @@
 const express = require('express')
 const app = express()
-const EventEmitter = require('events').EventEmitter
-// var child = require('child_process')
-var exec = require('child_process').exec
-const execSync = require('child_process').execSync;
 const { spawn } = require('child_process')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
@@ -13,34 +9,22 @@ var f = require('./func')
 var servers_info = require('./config.json')["servers_info"]
 var statuses_setting = require('./config.json')["status_info"]
 
-// console.log(config['test1']['port'])
-
 var status = {}
 var listen = {}
-var pre_status = {}
 var udpserver
-var pre_listen
-var status_timer
 
-//ポートリッスンしてるかどうか返すだけ
-function listen_get(target) {
-	serv_info = servers_info[target]
-	result = f.listen_check(serv_info['name'], serv_info['port'], serv_info['protocol'])
-	listen[target] = result
-	return result
-}
+
 
 //引数のステータスをもとに要素をセットする
 function status_set(target, status) {
 	state_opt = statuses_setting[status]
-	// console.log(state_opt['message'])
 	io.sockets.in(target).emit('server_status', state_opt['message'], state_opt['color'], state_opt['l_name'], state_opt['r_name'], state_opt['is_ing'])
 }
 
 
 //ソケット起動前に各サーバーのステータスを取得しておく
 Object.keys(servers_info).forEach(function (key, val) {
-	if (listen_get(key)) {
+	if (listen[key] = f.listen_get(key)) {
 		status[key] = 'run'
 	}
 	else {
@@ -48,7 +32,7 @@ Object.keys(servers_info).forEach(function (key, val) {
 	}
 })
 
-//各チャンネルに合わせた要素のセット(config.jsonで定義したいな？)
+//各チャンネルに合わせた要素のセット
 function element_set(target) {
 	io.sockets.in(target).emit('change channel', target, f.Upper(target), servers_info[target]['background']); //背景とか要素置き換え
 }
@@ -76,15 +60,15 @@ function server_ctl(action, target) {
 		var check_loop = true
 
 		//まずはlisten状態を確認
-		listen = listen_get(target);
+		listen[target] = f.listen_get(target);
 
 		//
-		if (listen && (action === 'Start' || action === 'Restart')) {
+		if (listen[target] && (action === 'Start' || action === 'Restart')) {
 			status[target] = 'run'
 			check_loop = false;
 		}
 
-		if(!listen && action === 'Stop'){
+		if(!listen[target] && action === 'Stop'){
 			status[target] = 'not'
 			check_loop = false;
 		}
@@ -95,13 +79,6 @@ function server_ctl(action, target) {
 		}
 	}, 500);
 }
-// console.log(typeof servers_info)
-
-// Object.keys(servers_info).forEach(function(key,val){
-// 	info = servers_info[key]
-// 	result = f.listen_check(info['name'], info['port'], info['protocol'])
-// 	console.log(info['name'],":",result)
-// })
 
 //クライアントが接続したら操作受付待ち
 io.on('connection', function (socket) {
@@ -118,7 +95,6 @@ io.on('connection', function (socket) {
 	socket.on('change channel', function (newChannel) {
 		socket.leave(channel); //チャンネルを去る
 		socket.join(newChannel); //選択された新しいチャンネルのルームに入る
-		console.log(status[newChannel])
 		status_set(newChannel, status[newChannel]) //新しいチャンネルのステータスを取得し、要素セット
 		element_set(newChannel)//新しいチャンネル用の要素をセット（サーバー名とか背景色とか）
 		channel = newChannel; //今いるチャンネルを保存
