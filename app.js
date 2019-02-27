@@ -34,7 +34,7 @@ Object.keys(servers_info).forEach(function (key, val) {
 
 //各チャンネルに合わせた要素のセット
 function element_set(target) {
-	io.sockets.in(target).emit('change channel', target, f.Upper(target), servers_info[target]['background']); //背景とか要素置き換え
+	io.sockets.in(target).emit('change channel', target, servers_info[target]['name'], servers_info[target]['background']); //背景とか要素置き換え
 }
 
 //サーバーへのアクション

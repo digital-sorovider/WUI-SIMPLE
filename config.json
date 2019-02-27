@@ -1,24 +1,28 @@
 {
     "servers_info": {
         "test1": {
-            "name": "test1",
+            "name": "Test1",
             "port": "4000",
             "protocol": "UDP",
             "background": "#668d9c"
         },
         "test2": {
-            "name": "test2",
+            "name": "Test2",
             "port": "5000",
             "protocol": "UDP",
             "background": "#669c6b"
         },
         "test3": {
-            "name": "test3",
+            "name": "Test3",
             "port": "6000",
             "protocol": "UDP",
             "background": "#bcc977"
         }
     },
+
+
+
+
     "status_info": {
         "run": {
             "message": "Running!!",
